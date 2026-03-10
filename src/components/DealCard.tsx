@@ -23,54 +23,44 @@ export default function DealCard({ deal }: { deal: Deal }) {
   return (
     <Link
       href={`/deal/${deal.id}`}
-      className="group block rounded-xl border border-border bg-bg-card p-5 transition hover:border-border-light hover:bg-bg-card-hover"
+      className="card-shine group block rounded-2xl border border-border bg-bg-card p-5 transition-all duration-200 hover:border-border-light hover:bg-bg-card-hover hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
     >
-      <div className="flex items-start justify-between">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 text-sm text-text-secondary">
-            <span>{deal.from}</span>
-            <span className="text-text-muted">({deal.fromCode})</span>
-          </div>
-          <div className="mt-1 flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0 text-text-muted">
-              <path d="M4 8h8m0 0L9 5m3 3L9 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <div className="text-lg font-semibold text-text-primary">{deal.to}</div>
-            <span className="text-sm text-text-muted">({deal.toCode})</span>
+      {/* Top: Route + Price */}
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="text-xs text-text-muted">{deal.from} ({deal.fromCode})</div>
+          <div className="mt-1.5 flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-bg-elevated text-xs font-bold text-text-muted group-hover:bg-accent/10 group-hover:text-accent transition">
+              {deal.toCode}
+            </div>
+            <div>
+              <div className="text-[17px] font-semibold text-text-primary leading-tight">{deal.to}</div>
+              <div className="text-xs text-text-muted mt-0.5">{deal.airline} &middot; {deal.duration} &middot; {deal.stops === 0 ? "Direct" : `${deal.stops} stop`}</div>
+            </div>
           </div>
         </div>
-        <div className="text-right">
-          <div className="text-2xl font-bold text-text-primary">
+        <div className="text-right shrink-0">
+          <div className="text-2xl font-bold text-text-primary tracking-tight">
             {deal.currency}{deal.price}
           </div>
-          <div className="mt-0.5 flex items-center justify-end gap-1.5">
+          <div className="mt-1 flex items-center justify-end gap-2">
             <span className="text-xs text-text-muted line-through">{deal.currency}{deal.normalPrice}</span>
-            <span className="rounded-full bg-green-dim px-2 py-0.5 text-xs font-medium text-green">
+            <span className="rounded-md bg-green-dim px-1.5 py-0.5 text-xs font-semibold text-green border border-green-border">
               -{savings}%
             </span>
           </div>
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-4 text-xs text-text-secondary">
-        <span className="rounded-md bg-bg-elevated px-2 py-1 font-medium">{deal.cabin}</span>
-        <span className="flex items-center gap-1">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-text-muted">
-            <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          {deal.airline}
-        </span>
-        <span>{deal.duration}</span>
-        <span>{deal.stops === 0 ? "Direct" : `${deal.stops} stop${deal.stops > 1 ? "s" : ""}`}</span>
-        <span className="text-text-muted">{deal.availability}</span>
-      </div>
-
-      <div className="mt-3 flex gap-2">
-        {deal.tags.map((tag) => (
-          <span key={tag} className="rounded-full bg-bg-elevated px-2.5 py-0.5 text-xs text-text-muted">
-            #{tag}
-          </span>
-        ))}
+      {/* Bottom: Meta row */}
+      <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="rounded-md bg-bg-elevated px-2 py-1 text-[11px] font-medium text-text-secondary">{deal.cabin}</span>
+          <span className="text-[11px] text-text-muted">{deal.availability}</span>
+        </div>
+        <div className="text-xs text-text-muted opacity-0 group-hover:opacity-100 transition-opacity">
+          View deal →
+        </div>
       </div>
     </Link>
   );
